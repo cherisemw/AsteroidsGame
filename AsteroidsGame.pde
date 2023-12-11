@@ -1,5 +1,6 @@
 Spaceship rocket = new Spaceship();
 Star[] space = new Star[250];
+ArrayList<Asteroid> theRocks = new ArrayList<Asteroid>();
 
 public void setup() 
 {
@@ -8,6 +9,9 @@ public void setup()
  for (int i = 0; i < space.length; i++){
    space[i] = new Star();
    space[i].coordinate();
+ }
+ for (int j = 0; j < 5; j++){
+   theRocks.add(new Asteroid()); 
  }
 }
 
@@ -18,6 +22,14 @@ public void draw()
   rocket.show();
   for(int i = 0; i < space.length; i++){
     space[i].show();
+  }
+  for (int j = 0; j < theRocks.size(); j++){
+    theRocks.get(j).move();
+    theRocks.get(j).show();
+    float d = dist((float)rocket.myCenterX, (float)rocket.myCenterY, (float)theRocks.get(j).getX(), (float)theRocks.get(j).getY());
+    if (d < 20){
+      theRocks.remove(j);
+    }
   }
 }
 
