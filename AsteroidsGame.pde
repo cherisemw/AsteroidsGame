@@ -1,6 +1,7 @@
 Spaceship rocket = new Spaceship();
 Star[] space = new Star[250];
 ArrayList<Asteroid> theRocks = new ArrayList<Asteroid>();
+ArrayList<Bullet> theBullets = new ArrayList<Bullet>();
 
 public void setup() 
 {
@@ -31,6 +32,18 @@ public void draw()
       theRocks.remove(j);
     }
   }
+  for (int k = 0; k < theBullets.size(); k++){
+    theBullets.get(k).show();
+    theBullets.get(k).move();
+    for (int l = 0; l < theRocks.size(); l++){
+      float distance = dist((float)theBullets.get(k).myCenterX, (float)theBullets.get(k).myCenterY, (float)theRocks.get(l).getX(), (float)theRocks.get(l).getY());
+      if (distance < 15){
+        theBullets.remove(k);
+        theRocks.remove(l);
+        break;
+      }
+    }
+  }
 }
 
 public void keyPressed(){
@@ -51,5 +64,8 @@ public void keyPressed(){
     rocket.myYspeed = 0;
     rocket.hyperspace();
     rocket.show();
+  }
+  if (key == 'r'){
+     theBullets.add(new Bullet(rocket));
   }
 }
